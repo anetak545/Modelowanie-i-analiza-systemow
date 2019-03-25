@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Mar 25 21:30:32 2019
+
+@author: Paulina
+"""
+import math as m
+def CountField(x):
+    try:
+        pole = 0
+        flaga = 0
+        if x[0]=='Circle':
+            pole = m.pi*pow(x[1],2)
+        elif x[0]=='Rectangle':
+            pole = x[1]*x[2]
+        elif x[0]=='Triangle':
+            pole=(x[1]*x[2])/2
+        elif x[0]=='Rhombus':
+            pole=x[1]*x[2]/2
+        else:
+            print('Źle wpisałes!')
+    except IndexError:
+        print('Podałes błędne argumenty do funkcji')
+        flaga=1
+            
+    return(pole,flaga)
+        
+#print(CountField(['Triangle',2,4]))
+
+def CompareFields(x,y):
+    p1,f1 = CountField(x)
+    p2,f2 = CountField(y)
+    if p1 == p2 and (f1!=1) and (f2!=1):
+        #print('Figures: (','), (',y[0]') have the same fields')
+        print("Figures (",x[0],")  and (",y[0],") have the same fields")
+    elif p1>p2 and (f1!=1) and (f2!=1):
+        print("The first figure (",x[0],") has larger field")
+    elif p2>p1 and (f1!=1) and (f2!=1):
+        print("The second figure (",y[0],") has larger field")
+        
+CompareFields(['Triangle',2,4],['Rectangle',2])
