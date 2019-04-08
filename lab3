@@ -1,41 +1,91 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Mar 25 21:30:32 2019
+Created on Mon Apr  8 19:22:24 2019
 
-@author: Paulina
+@author: Aneta
 """
+
 import math as m
-def CountField(x):
+def CountField(x,*y):
     try:
-        pole = 0
-        flaga = 0
-        if x[0]=='Circle':
-            pole = m.pi*pow(x[1],2)
-        elif x[0]=='Rectangle':
-            pole = x[1]*x[2]
-        elif x[0]=='Triangle':
-            pole=(x[1]*x[2])/2
-        elif x[0]=='Rhombus':
-            pole=x[1]*x[2]/2
+        pole = None
+        if y==():
+
+            if x[0]=='Circle':
+                pole = Circle(x)
+            elif x[0]=='Rectangle':
+                pole = Rectangle(x)
+            elif x[0]=='Triangle':
+                pole = Triangle(x)
+            elif x[0]=='Rhombus':
+                pole = Rhombus(x)
+            else:
+                    print('Źle wpisałes!')
         else:
-            print('Źle wpisałes!')
+            print('Za duzo figur')
+                
     except IndexError:
         print('Podałes błędne argumenty do funkcji')
-        flaga=1
-            
-    return(pole,flaga)
         
-#print(CountField(['Triangle',2,4]))
+    return(pole)
+    
+#print(CountField(['Rhombus',9,70]))
 
-def CompareFields(x,y):
-    p1,f1 = CountField(x)
-    p2,f2 = CountField(y)
-    if p1 == p2 and (f1!=1) and (f2!=1):
-        #print('Figures: (','), (',y[0]') have the same fields')
-        print("Figures (",x[0],")  and (",y[0],") have the same fields")
-    elif p1>p2 and (f1!=1) and (f2!=1):
-        print("The first figure (",x[0],") has larger field")
-    elif p2>p1 and (f1!=1) and (f2!=1):
-        print("The second figure (",y[0],") has larger field")
-        
-CompareFields(['Triangle',2,4],['Rectangle',2])
+def Circle(x):
+    pole = None
+    if len(x)==2 and x[1]>0:
+        pole = m.pi*pow(x[1],2)
+    else:
+        print('Złe argumenty')
+        pole = None
+    return(pole)
+
+def Rectangle(x):
+    pole = 0
+    if len(x)==3 and x[1]>0 and x[2]>0:
+        pole = x[1]*x[2]
+    else:
+        print('Złe argumenty')
+        pole = None
+    return(pole)
+    
+def Triangle(x):
+    pole = None
+    if len(x)==3 and x[1]>0 and x[2]>0:
+        pole=(x[1]*x[2])/2
+    else:
+        print('Złe argumenty')
+        pole = None
+    return(pole)
+    
+def Rhombus(x):
+    if len(x)==3 and x[1]>0 and x[2]>0:
+        pole=x[1]*x[2]/2
+    else:
+        print('Złe argumenty')
+        pole = None
+    return(pole)
+    
+
+def CompareFields(a,*b):
+    try:
+        x = a[0]
+        y = a[1]
+        p1 = CountField(x)
+        p2 = CountField(y)
+        if p1 == p2:
+            #print('Figures: (','), (',y[0]') have the same fields')
+            print("Figures (",x[0],")  and (",y[0],") have the same fields")
+        elif p1>p2:
+            print("The first figure (",x[0],") has larger field")
+        elif p2>p1:
+            print("The second figure (",y[0],") has larger field")
+    except TypeError:
+        print('Argumenty muszą być wieksze od 0')
+CompareFields([['Circle', 4], ['Rhombus', 2, 0.5]])
+
+def temp(x):
+    print(x)
+    print(x[0])
+    
+#temp([['Circle', 4], ['Rhombus', 2, 4]])
